@@ -1,4 +1,4 @@
-# Backend - Full Stack Trivia API 
+# Backend - Full Stack Trivia API
 
 ### Installing Dependencies for the Backend
 
@@ -18,9 +18,9 @@ This will install all of the required packages we selected within the `requireme
 4. **Key Dependencies**
  - [Flask](http://flask.pocoo.org/)  is a lightweight backend microservices framework. Flask is required to handle requests and responses.
 
- - [SQLAlchemy](https://www.sqlalchemy.org/) is the Python SQL toolkit and ORM we'll use handle the lightweight sqlite database. You'll primarily work in app.py and can reference models.py. 
+ - [SQLAlchemy](https://www.sqlalchemy.org/) is the Python SQL toolkit and ORM we'll use handle the lightweight sqlite database. You'll primarily work in app.py and can reference models.py.
 
- - [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/#) is the extension we'll use to handle cross origin requests from our frontend server. 
+ - [Flask-CORS](https://flask-cors.readthedocs.io/en/latest/#) is the extension we'll use to handle cross origin requests from our frontend server.
 
 ### Database Setup
 With Postgres running, restore a database using the trivia.psql file provided. From the backend folder in terminal run:
@@ -47,59 +47,304 @@ These are the files you'd want to edit in the backend:
 2. *./backend/test_flaskr.py*
 
 
-One note before you delve into your tasks: for each endpoint, you are expected to define the endpoint and response data. The frontend will be a plentiful resource because it is set up to expect certain endpoints and response data formats already. You should feel free to specify endpoints in your own way; if you do so, make sure to update the frontend or you will get some unexpected behavior. 
+One note before you delve into your tasks: for each endpoint, you are expected to define the endpoint and response data. The frontend will be a plentiful resource because it is set up to expect certain endpoints and response data formats already. You should feel free to specify endpoints in your own way; if you do so, make sure to update the frontend or you will get some unexpected behavior.
 
-1. Use Flask-CORS to enable cross-domain requests and set response headers. 
-
-
-2. Create an endpoint to handle GET requests for questions, including pagination (every 10 questions). This endpoint should return a list of questions, number of total questions, current category, categories. 
+1. Use Flask-CORS to enable cross-domain requests and set response headers.
 
 
-3. Create an endpoint to handle GET requests for all available categories. 
+2. Create an endpoint to handle GET requests for questions, including pagination (every 10 questions). This endpoint should return a list of questions, number of total questions, current category, categories.
 
 
-4. Create an endpoint to DELETE question using a question ID. 
+3. Create an endpoint to handle GET requests for all available categories.
 
 
-5. Create an endpoint to POST a new question, which will require the question and answer text, category, and difficulty score. 
+4. Create an endpoint to DELETE question using a question ID.
 
 
-6. Create a POST endpoint to get questions based on category. 
+5. Create an endpoint to POST a new question, which will require the question and answer text, category, and difficulty score.
 
 
-7. Create a POST endpoint to get questions based on a search term. It should return any questions for whom the search term is a substring of the question. 
+6. Create a POST endpoint to get questions based on category.
 
 
-8. Create a POST endpoint to get questions to play the quiz. This endpoint should take category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions. 
+7. Create a POST endpoint to get questions based on a search term. It should return any questions for whom the search term is a substring of the question.
 
 
-9. Create error handlers for all expected errors including 400, 404, 422 and 500. 
+8. Create a POST endpoint to get questions to play the quiz. This endpoint should take category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions.
+
+
+9. Create error handlers for all expected errors including 400, 404, 422 and 500.
 
 
 
-## Review Comment to the Students
-```
-This README is missing documentation of your endpoints. Below is an example for your endpoint to get all categories. Please use it as a reference for creating your documentation and resubmit your code. 
-
-Endpoints
-GET '/api/v1.0/categories'
-GET ...
-POST ...
-DELETE ...
-
-GET '/api/v1.0/categories'
+### endpoints
+#### GET /categories
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
 - Request Arguments: None
-- Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs. 
-{'1' : "Science",
-'2' : "Art",
-'3' : "Geography",
-'4' : "History",
-'5' : "Entertainment",
-'6' : "Sports"}
-
+- Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs
+- Sample: `curl http://localhost:5000/categories`
+``` {
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  },
+  "success": true
+}
+```
+#### GET /questions
+- Returns a list of question objects, success value, total number of questions, current category as NULL, and a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category  
+- Results are paginated in groups of 10.
+- Request Arguments: page number, defaulting to 1 if no page number provided
+- Sample: `curl http://localhost:5000/questions?page=2`
+``` {
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  },
+  "current_category": null,
+  "questions": [
+    {
+      "answer": "One",
+      "category": 2,
+      "difficulty": 4,
+      "id": 18,
+      "question": "How many paintings did Van Gogh sell in his lifetime?"
+    },
+    {
+      "answer": "Jackson Pollock",
+      "category": 2,
+      "difficulty": 2,
+      "id": 19,
+      "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
+    },
+    {
+      "answer": "The Liver",
+      "category": 1,
+      "difficulty": 4,
+      "id": 20,
+      "question": "What is the heaviest organ in the human body?"
+    },
+    {
+      "answer": "Blood",
+      "category": 1,
+      "difficulty": 4,
+      "id": 22,
+      "question": "Hematology is a branch of medicine involving the study of what?"
+    },
+    {
+      "answer": "Scarab",
+      "category": 4,
+      "difficulty": 4,
+      "id": 23,
+      "question": "Which dung beetle was worshipped by the ancient Egyptians?"
+    },
+    {
+      "answer": "2",
+      "category": 1,
+      "difficulty": 1,
+      "id": 104,
+      "question": "234"
+    },
+    {
+      "answer": "test_post_question_answer",
+      "category": 2,
+      "difficulty": 5,
+      "id": 106,
+      "question": "test_post_question_question"
+    }
+  ],
+  "success": true,
+  "total_questions": 17
+}
 ```
 
+#### DELETE /questions
+- Deletes the question of the given id if it exists
+- Request Arguments: question id
+- Returns a list of question objects, success value, total number of questions, current category as NULL, and a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category  
+- Sample: `curl -X DELETE http://localhost:5000/questions/104`
+```
+{
+  "categories": {
+    "1": "Science",
+    "2": "Art",
+    "3": "Geography",
+    "4": "History",
+    "5": "Entertainment",
+    "6": "Sports"
+  },
+  "current_category": null,
+  "questions": [
+    {
+      "answer": "Muhammad Ali",
+      "category": 4,
+      "difficulty": 1,
+      "id": 9,
+      "question": "What boxer's original name is Cassius Clay?"
+    },
+    {
+      "answer": "Edward Scissorhands",
+      "category": 5,
+      "difficulty": 3,
+      "id": 6,
+      "question": "What was the title of the 1990 fantasy directed by Tim Burton about a young man with multi-bladed appendages?"
+    },
+    {
+      "answer": "Brazil",
+      "category": 6,
+      "difficulty": 3,
+      "id": 10,
+      "question": "Which is the only team to play in every soccer World Cup tournament?"
+    },
+    {
+      "answer": "Uruguay",
+      "category": 6,
+      "difficulty": 4,
+      "id": 11,
+      "question": "Which country won the first ever soccer World Cup in 1930?"
+    },
+    {
+      "answer": "George Washington Carver",
+      "category": 4,
+      "difficulty": 2,
+      "id": 12,
+      "question": "Who invented Peanut Butter?"
+    },
+    {
+      "answer": "Lake Victoria",
+      "category": 3,
+      "difficulty": 2,
+      "id": 13,
+      "question": "What is the largest lake in Africa?"
+    },
+    {
+      "answer": "The Palace of Versailles",
+      "category": 3,
+      "difficulty": 3,
+      "id": 14,
+      "question": "In which royal palace would you find the Hall of Mirrors?"
+    },
+    {
+      "answer": "Agra",
+      "category": 3,
+      "difficulty": 2,
+      "id": 15,
+      "question": "The Taj Mahal is located in which Indian city?"
+    },
+    {
+      "answer": "Escher",
+      "category": 2,
+      "difficulty": 1,
+      "id": 16,
+      "question": "Which Dutch graphic artist\u2013initials M C was a creator of optical illusions?"
+    },
+    {
+      "answer": "Mona Lisa",
+      "category": 2,
+      "difficulty": 3,
+      "id": 17,
+      "question": "La Giaconda is better known as what?"
+    }
+  ],
+  "success": true,
+  "total_questions": 16
+}
+```
+
+#### POST /questions
+- Creates a new question with given question, answer, difficulty and category.  
+- Request Arguments: question, answer, difficulty and category. All are required in order to create a question.
+- Returns a success value
+- `curl http://localhost:5000/questions -X POST -H "Content-Type: application/json" -d '{"question":"Sample question", "answer":"Sample answer", "difficulty":"5", "category":"2"}'`
+```
+{
+  "success": true
+}
+```
+
+#### POST /questions/search
+- Case insensitive search of questions where the search term is a substring of the question string. Returns a list of question objects, success value, total number of questions and current category as NULL
+- Results are paginated in groups of 10.
+- Request Arguments: search term
+- Returns a list of question objects, success value, total number of questions and current category as NULL
+- Sample: `curl http://localhost:5000/questions/search -X POST -H "Content-Type: application/json" -d '{"searchTerm":"boxer"}'`
+
+
+```
+  "current_category": null,
+  "questions": [
+    {
+      "answer": "Muhammad Ali",
+      "category": 4,
+      "difficulty": 1,
+      "id": 9,
+      "question": "What boxer's original name is Cassius Clay?"
+    }
+  ],
+  "success": true,
+  "total_questions": 1
+}
+```
+
+#### GET /categories/<int:category_id>/questions
+- Returns a list of question objects with a category id of the given id, success value, total number of questions and current category  
+- Results are paginated in groups of 10.
+- Request Arguments: category id
+- Sample: `curl http://localhost:5000/categories/3/questions`
+```
+{
+  "current_category": 3,
+  "questions": [
+    {
+      "answer": "Lake Victoria",
+      "category": 3,
+      "difficulty": 2,
+      "id": 13,
+      "question": "What is the largest lake in Africa?"
+    },
+    {
+      "answer": "The Palace of Versailles",
+      "category": 3,
+      "difficulty": 3,
+      "id": 14,
+      "question": "In which royal palace would you find the Hall of Mirrors?"
+    },
+    {
+      "answer": "Agra",
+      "category": 3,
+      "difficulty": 2,
+      "id": 15,
+      "question": "The Taj Mahal is located in which Indian city?"
+    }
+  ],
+  "success": true,
+  "total_questions": 3
+}
+```
+#### POST /quizzes
+- Returns a single randomly selected question belonging to the specified category category id and where the question is not in the list of previous questions. Also returns success value  
+- Request Arguments: quiz_category as a dictionary with key/value pair as id and type, previous_questions as a list (defaulting to an empty list if none provided)
+- Sample: `curl http://localhost:5000/quizzes -X POST -H "Content-Type: application/json" -d '{"quiz_category": {"id": "2", "type":"Geography"}, "previous_questions":[]}'`
+```
+{
+  "question": {
+    "answer": "Jackson Pollock",
+    "category": 2,
+    "difficulty": 2,
+    "id": 19,
+    "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
+  },
+  "success": true
+}
+```
 
 ## Testing
 To run the tests, run
